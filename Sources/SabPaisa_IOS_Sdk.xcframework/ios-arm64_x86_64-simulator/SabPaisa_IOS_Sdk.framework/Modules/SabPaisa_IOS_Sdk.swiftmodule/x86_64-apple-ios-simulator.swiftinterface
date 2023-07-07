@@ -1,0 +1,619 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target x86_64-apple-ios15.5-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SabPaisa_IOS_Sdk
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import Alamofire
+import CryptoSwift
+import Foundation
+import JavaScriptCore
+import Lottie
+@_exported import SabPaisa_IOS_Sdk
+import Security
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import iOSDropDown
+public struct Result {
+  public enum Status {
+    case success
+    case failure
+    public static func == (a: SabPaisa_IOS_Sdk.Result.Status, b: SabPaisa_IOS_Sdk.Result.Status) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var status: SabPaisa_IOS_Sdk.Result.Status
+  public var errors: [any Swift.Error]?
+  public var value: Any
+  public static func fail(_ value: Any, withErrors errors: [any Swift.Error]? = nil) -> SabPaisa_IOS_Sdk.Result
+  public static func succeed(_ value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+public protocol Validatable {
+  var inputValue: Any { get }
+  func satisfyAll(rules: [any SabPaisa_IOS_Sdk.Rule]) -> SabPaisa_IOS_Sdk.Result
+  func satisfyAny(rules: [any SabPaisa_IOS_Sdk.Rule]) -> SabPaisa_IOS_Sdk.Result
+}
+extension SabPaisa_IOS_Sdk.Validatable {
+  public var inputValue: Any {
+    get
+  }
+  public func satisfyAll(rules: [any SabPaisa_IOS_Sdk.Rule]) -> SabPaisa_IOS_Sdk.Result
+  public func satisfyAny(rules: [any SabPaisa_IOS_Sdk.Rule]) -> SabPaisa_IOS_Sdk.Result
+}
+extension Swift.String : SabPaisa_IOS_Sdk.Validatable {
+}
+extension Swift.Bool : SabPaisa_IOS_Sdk.Validatable {
+}
+extension Swift.Int : SabPaisa_IOS_Sdk.Validatable {
+}
+extension Swift.Double : SabPaisa_IOS_Sdk.Validatable {
+}
+extension Swift.Float : SabPaisa_IOS_Sdk.Validatable {
+}
+extension CoreFoundation.CGFloat : SabPaisa_IOS_Sdk.Validatable {
+}
+extension Swift.Array : SabPaisa_IOS_Sdk.Validatable {
+}
+extension Foundation.Date : SabPaisa_IOS_Sdk.Validatable {
+}
+public typealias ValidationHandler = ((SabPaisa_IOS_Sdk.Result) -> Swift.Void)
+public protocol Rule {
+  var error: any Swift.Error { get set }
+  func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+extension SabPaisa_IOS_Sdk.Rule {
+  public func with(error: any Swift.Error) -> any SabPaisa_IOS_Sdk.Rule
+  public func with(errorMessage: Swift.String) -> any SabPaisa_IOS_Sdk.Rule
+}
+public struct RangeRule<T> : SabPaisa_IOS_Sdk.Rule where T : Swift.Comparable {
+  public var error: any Swift.Error
+  public init(min: T, max: T, error: any Swift.Error = ValidationError.valueOutOfRange)
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+public struct EqualityRule<T> : SabPaisa_IOS_Sdk.Rule where T : Swift.Equatable {
+  public enum Mode {
+    case equal
+    case notEqual
+    public static func == (a: SabPaisa_IOS_Sdk.EqualityRule<T>.Mode, b: SabPaisa_IOS_Sdk.EqualityRule<T>.Mode) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var error: any Swift.Error
+  public init(value: T, mode: SabPaisa_IOS_Sdk.EqualityRule<T>.Mode = .equal, error: (any Swift.Error)? = nil)
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+public protocol ValidatableInterface : AnyObject, SabPaisa_IOS_Sdk.Validatable {
+  func validateOnInputChange(_ validate: Swift.Bool)
+  func validateOnFocusLoss(_ validate: Swift.Bool)
+}
+extension SabPaisa_IOS_Sdk.ValidatableInterface {
+  public var inputValue: Any {
+    get
+  }
+}
+extension SabPaisa_IOS_Sdk.ValidatableInterface where Self : Swift.Hashable {
+  public var validationRules: [any SabPaisa_IOS_Sdk.Rule]? {
+    get
+    set
+  }
+  public var validationHandler: SabPaisa_IOS_Sdk.ValidationHandler? {
+    get
+    set
+  }
+  public var formHandler: SabPaisa_IOS_Sdk.ValidationHandler? {
+    get
+    set
+  }
+  public func cleanUpFromValidatorCache()
+}
+public class SdkInitModel {
+  public init()
+  public init(firstName: Swift.String, lastName: Swift.String, secKey: Swift.String, secInivialVector: Swift.String, transUserName: Swift.String, transUserPassword: Swift.String, clientCode: Swift.String, amount: Swift.Float, emailAddress: Swift.String = "", mobileNumber: Swift.String = "", isProd: Swift.Bool = false, udf1: Swift.String = "", udf2: Swift.String = "", udf3: Swift.String = "", udf4: Swift.String = "", udf5: Swift.String = "", udf6: Swift.String = "", udf7: Swift.String = "", udf8: Swift.String = "", udf9: Swift.String = "", udf10: Swift.String = "", udf11: Swift.String = "", udf12: Swift.String = "", udf13: Swift.String = "", udf14: Swift.String = "", udf15: Swift.String = "", udf16: Swift.String = "", udf17: Swift.String = "", udf18: Swift.String = "", udf19: Swift.String = "", udf20: Swift.String = "", payerAddress: Swift.String = "", amountType: Swift.String = "", mcc: Swift.String = "", transDate: Swift.String = "", programId: Swift.String = "", baseUrl: Swift.String = "", initiUrl: Swift.String = "", transactionEnquiryUrl: Swift.String = "", salutation: Swift.String = "", sabpaisaPaymentScreenEnabled: Swift.Bool = false, transactionId: Swift.String = "", callbackUrl: Swift.String = "http://localhost:8080/response.html")
+  @objc deinit
+}
+public struct ConfirmUpiIntent : Swift.Codable {
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public struct StringRegexRule : SabPaisa_IOS_Sdk.Rule {
+  public var error: any Swift.Error
+  public init(regex: Swift.String, trimWhiteSpace: Swift.Bool = true, error: any Swift.Error = ValidationError.regexMismatch)
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+extension SabPaisa_IOS_Sdk.StringRegexRule {
+  public static let email: SabPaisa_IOS_Sdk.StringRegexRule
+  public static func containsNumber(min: Swift.UInt8 = 1, max: Swift.UInt8 = UInt8.max, error: any Swift.Error = ValidationError.numberNotFound) -> SabPaisa_IOS_Sdk.StringRegexRule
+  public static func containsUpperCase(min: Swift.UInt8 = 1, max: Swift.UInt8 = UInt8.max, error: any Swift.Error = ValidationError.upperCaseNotFound) -> SabPaisa_IOS_Sdk.StringRegexRule
+  public static func containsLowerCase(min: Swift.UInt8 = 1, max: Swift.UInt8 = UInt8.max, error: any Swift.Error = ValidationError.lowerCaseNotFound) -> SabPaisa_IOS_Sdk.StringRegexRule
+  public static let numbersOnly: SabPaisa_IOS_Sdk.StringRegexRule
+  public static let lowerCaseOnly: SabPaisa_IOS_Sdk.StringRegexRule
+  public static let upperCaseOnly: SabPaisa_IOS_Sdk.StringRegexRule
+}
+public struct CharacterSetRule : SabPaisa_IOS_Sdk.Rule {
+  public enum Mode {
+    case contains(min: Swift.Int, max: Swift.Int)
+    case containsOnly
+    case doesNotContain
+  }
+  public var error: any Swift.Error
+  public init(characterSet: Foundation.CharacterSet, mode: SabPaisa_IOS_Sdk.CharacterSetRule.Mode = .contains(min: 1, max: Int.max), ignoreCharactersIn ignoreCharacterSet: Foundation.CharacterSet? = nil, error: any Swift.Error = ValidationError.characterSetError)
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+extension SabPaisa_IOS_Sdk.CharacterSetRule {
+  public static func containsNumber(minimum: Swift.Int = 1, maximum: Swift.Int = Int.max, error: any Swift.Error = ValidationError.occurrencesNotInRange) -> SabPaisa_IOS_Sdk.CharacterSetRule
+  public static func containsUpperCase(minimum: Swift.Int = 1, maximum: Swift.Int = Int.max, error: any Swift.Error = ValidationError.occurrencesNotInRange) -> SabPaisa_IOS_Sdk.CharacterSetRule
+  public static func containsLowerCase(minimum: Swift.Int = 1, maximum: Swift.Int = Int.max, error: any Swift.Error = ValidationError.occurrencesNotInRange) -> SabPaisa_IOS_Sdk.CharacterSetRule
+  public static func containsSymbols(minimum: Swift.Int = 1, maximum: Swift.Int = Int.max, error: any Swift.Error = ValidationError.occurrencesNotInRange) -> SabPaisa_IOS_Sdk.CharacterSetRule
+  public static func numbersOnly(ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil) -> SabPaisa_IOS_Sdk.CharacterSetRule
+  public static func upperCaseOnly(ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil) -> SabPaisa_IOS_Sdk.CharacterSetRule
+  public static func lowerCaseOnly(ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil) -> SabPaisa_IOS_Sdk.CharacterSetRule
+}
+public enum PaymentCardType : Swift.String {
+  case amex
+  case mastercard
+  case maestro
+  case visa
+  case visaElectron
+  case discover
+  case dinersClub
+  public static var all: [SabPaisa_IOS_Sdk.PaymentCardType]
+  public init?(cardNumber: Swift.String)
+  public static func suggestedTypeForCardNumber(_ cardNumber: Swift.String?) -> SabPaisa_IOS_Sdk.PaymentCardType?
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ValidationError : Swift.Error {
+  case invalidType
+  case notEqual
+  case equal
+  case shorterThanMinimumLength
+  case longerThanMaximumLength
+  case lengthOutOfRange
+  case valueOutOfRange
+  case regexMismatch
+  case invalidEmail
+  case numberNotFound
+  case lowerCaseNotFound
+  case upperCaseNotFound
+  case invalidPaymentCardNumber
+  case paymentCardNotSupported
+  case characterSetError
+  case occurrencesNotInRange
+  case custom(errorMessage: Swift.String)
+  public var customErrorMessage: Swift.String? {
+    get
+  }
+}
+extension SabPaisa_IOS_Sdk.ValidationError : Swift.Equatable {
+  public static func == (a: SabPaisa_IOS_Sdk.ValidationError, b: SabPaisa_IOS_Sdk.ValidationError) -> Swift.Bool
+}
+public struct StringValueMatchRule : SabPaisa_IOS_Sdk.Rule {
+  public var error: any Swift.Error
+  public init(base: any SabPaisa_IOS_Sdk.ValidatableInterface, error: any Swift.Error = ValidationError.notEqual)
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+public struct StringLengthRule : SabPaisa_IOS_Sdk.Rule {
+  public var error: any Swift.Error
+  public init(min: Swift.Int = 0, max: Swift.Int = Int.max, trimWhiteSpace: Swift.Bool = true, ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil, error: any Swift.Error = ValidationError.lengthOutOfRange)
+  public static func min(_ min: Swift.Int, trimWhiteSpace: Swift.Bool = true, ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil, error: any Swift.Error = ValidationError.shorterThanMinimumLength) -> SabPaisa_IOS_Sdk.StringLengthRule
+  public static func required(trimWhiteSpace: Swift.Bool = true, ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil, error: any Swift.Error = ValidationError.shorterThanMinimumLength) -> SabPaisa_IOS_Sdk.StringLengthRule
+  public static func max(_ max: Swift.Int, trimWhiteSpace: Swift.Bool = true, ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil, error: any Swift.Error = ValidationError.longerThanMaximumLength) -> SabPaisa_IOS_Sdk.StringLengthRule
+  public static func equal(to length: Swift.Int, trimWhiteSpace: Swift.Bool = true, ignoreCharactersIn characterSet: Foundation.CharacterSet? = nil, error: any Swift.Error = ValidationError.notEqual) -> SabPaisa_IOS_Sdk.StringLengthRule
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+public class SabPaisaImageSync {
+  public init()
+  public func sync()
+  @objc deinit
+}
+extension UIKit.UITextView : SabPaisa_IOS_Sdk.ValidatableInterface {
+  @_Concurrency.MainActor(unsafe) public var inputValue: Any {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func validateOnInputChange(_ validate: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func validateOnFocusLoss(_ validate: Swift.Bool)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func validateTextView()
+}
+public class FormValidator {
+  public enum AutoValidationPolicy {
+    case never
+    case onInputChange
+    case onFocusLoss
+    public static func == (a: SabPaisa_IOS_Sdk.FormValidator.AutoValidationPolicy, b: SabPaisa_IOS_Sdk.FormValidator.AutoValidationPolicy) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public var handler: SabPaisa_IOS_Sdk.ValidationHandler?
+  public init(handler: SabPaisa_IOS_Sdk.ValidationHandler? = nil)
+  @objc deinit
+}
+extension SabPaisa_IOS_Sdk.FormValidator {
+  public func add<V>(_ element: V, policy: SabPaisa_IOS_Sdk.FormValidator.AutoValidationPolicy = .onFocusLoss) where V : SabPaisa_IOS_Sdk.ValidatableInterface, V : Swift.Hashable
+  public func remove<V>(_ element: V) where V : SabPaisa_IOS_Sdk.ValidatableInterface, V : Swift.Hashable
+  public func validateForm(shouldInvokeElementHandlers: Swift.Bool = true, completion: SabPaisa_IOS_Sdk.ValidationHandler? = nil)
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class DropDownNativeNetBanking : UIKit.UITextField {
+  @_Concurrency.MainActor(unsafe) public var selectedIndex: Swift.Int?
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var rowHeight: CoreFoundation.CGFloat
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var rowBackgroundColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var itemsColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var itemsTintColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var selectedRowColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var hideOptionsWhenSelect: Swift.Bool
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var isSearchEnable: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var borderColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var listHeight: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var borderWidth: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var cornerRadius: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionArray: [Swift.String] {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionImageArray: [Swift.String] {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionImageURLArray: [Swift.String] {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionIds: [Swift.Int]?
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var arrowSize: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var arrowColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var checkMarkEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var handleKeyboard: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+  @_Concurrency.MainActor(unsafe) public func showList()
+  @_Concurrency.MainActor(unsafe) public func hideList()
+  @_Concurrency.MainActor(unsafe) public func removeList()
+  @objc @_Concurrency.MainActor(unsafe) public func touchAction()
+  @_Concurrency.MainActor(unsafe) open func searchFilter(text: Swift.String, searchText: Swift.String) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) public func didSelect(completion: @escaping (_ selectedText: Swift.String, _ index: Swift.Int, _ id: Swift.Int) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listWillAppear(completion: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listDidAppear(completion: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listWillDisappear(completion: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listDidDisappear(completion: @escaping () -> Swift.Void)
+}
+extension SabPaisa_IOS_Sdk.DropDownNativeNetBanking : UIKit.UITextFieldDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldShouldReturn(_ textField: UIKit.UITextField) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldDidBeginEditing(_ textField: UIKit.UITextField)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldShouldBeginEditing(_ textField: UIKit.UITextField) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+}
+extension SabPaisa_IOS_Sdk.DropDownNativeNetBanking : UIKit.UITableViewDataSource {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+}
+extension SabPaisa_IOS_Sdk.DropDownNativeNetBanking : UIKit.UITableViewDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+}
+extension UIKit.UITextField : SabPaisa_IOS_Sdk.ValidatableInterface {
+  @_Concurrency.MainActor(unsafe) public var inputValue: Any {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func validateOnInputChange(_ validate: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) public func validateOnFocusLoss(_ validate: Swift.Bool)
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func validateTextField()
+}
+public struct TransactionResponse : Swift.Codable {
+  public let payerName: Swift.String?
+  public let payerEmail: Swift.String?
+  public let payerMobile: Swift.String?
+  public let clientTxnId: Swift.String?
+  public let payerAddress: Swift.String?
+  public let amount: Swift.String?
+  public let clientCode: Swift.String?
+  public let paidAmount: Swift.String?
+  public let paymentMode: Swift.String?
+  public let bankName: Swift.String?
+  public let amountType: Swift.String?
+  public let status: Swift.String?
+  public let statusCode: Swift.String?
+  public let challanNumber: Swift.String?
+  public let sabpaisaTxnId: Swift.String?
+  public let sabpaisaMessage: Swift.String?
+  public let bankMessage: Swift.String?
+  public let bankErrorCode: Swift.String?
+  public let sabpaisaErrorCode: Swift.String?
+  public let bankTxnId: Swift.String?
+  public let transDate: Swift.String?
+  public let udf1: Swift.String?
+  public let udf2: Swift.String?
+  public let udf3: Swift.String?
+  public let udf4: Swift.String?
+  public let udf5: Swift.String?
+  public let udf6: Swift.String?
+  public let udf7: Swift.String?
+  public let udf8: Swift.String?
+  public let udf9: Swift.String?
+  public let udf10: Swift.String?
+  public let udf11: Swift.String?
+  public let udf12: Swift.String?
+  public let udf13: Swift.String?
+  public let udf14: Swift.String?
+  public let udf15: Swift.String?
+  public let udf16: Swift.String?
+  public let udf17: Swift.String?
+  public let udf18: Swift.String?
+  public let udf19: Swift.String?
+  public let udf20: Swift.String?
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension UIKit.UIFont {
+  public static let loadMyFonts: ()
+}
+extension Swift.String {
+  public var validPhoneNumber: Swift.Bool {
+    get
+  }
+}
+extension Swift.String {
+  public var initials: Swift.String {
+    get
+  }
+}
+public struct PaymentCardRule : SabPaisa_IOS_Sdk.Rule {
+  public var invalidCardNumberError: any Swift.Error
+  public var error: any Swift.Error
+  public init(acceptedTypes: [SabPaisa_IOS_Sdk.PaymentCardType] = PaymentCardType.all, invalidCardNumberError: any Swift.Error = ValidationError.invalidPaymentCardNumber, cardTypeNotSupportedError error: any Swift.Error = ValidationError.paymentCardNotSupported)
+  public func validate(value: Any) -> SabPaisa_IOS_Sdk.Result
+}
+public class SabPaisaGateWay {
+  public init()
+  public func log(message: Swift.String)
+  public func openViewController(viewController: UIKit.UIViewController)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class DropDownNative : UIKit.UITextField {
+  @_Concurrency.MainActor(unsafe) public var selectedIndex: Swift.Int?
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var rowHeight: CoreFoundation.CGFloat
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var rowBackgroundColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var itemsColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var itemsTintColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var selectedRowColor: UIKit.UIColor
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var hideOptionsWhenSelect: Swift.Bool
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var isSearchEnable: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var borderColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var listHeight: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var borderWidth: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var cornerRadius: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionArray: [Swift.String] {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionImageArray: [Swift.String] {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var optionIds: [Swift.Int]?
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var arrowSize: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var arrowColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var checkMarkEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable @_Concurrency.MainActor(unsafe) public var handleKeyboard: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+  @_Concurrency.MainActor(unsafe) public func showList()
+  @_Concurrency.MainActor(unsafe) public func hideList()
+  @objc @_Concurrency.MainActor(unsafe) public func touchAction()
+  @_Concurrency.MainActor(unsafe) open func searchFilter(text: Swift.String, searchText: Swift.String) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) public func didSelect(completion: @escaping (_ selectedText: Swift.String, _ index: Swift.Int, _ id: Swift.Int) -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listWillAppear(completion: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listDidAppear(completion: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listWillDisappear(completion: @escaping () -> Swift.Void)
+  @_Concurrency.MainActor(unsafe) public func listDidDisappear(completion: @escaping () -> Swift.Void)
+}
+extension SabPaisa_IOS_Sdk.DropDownNative : UIKit.UITextFieldDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldShouldReturn(_ textField: UIKit.UITextField) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldDidBeginEditing(_ textField: UIKit.UITextField)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldShouldBeginEditing(_ textField: UIKit.UITextField) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textField(_ textField: UIKit.UITextField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+}
+extension SabPaisa_IOS_Sdk.DropDownNative : UIKit.UITableViewDataSource {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+}
+extension SabPaisa_IOS_Sdk.DropDownNative : UIKit.UITableViewDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+}
+@_hasMissingDesignatedInitializers open class CryptoJS {
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class AES : SabPaisa_IOS_Sdk.CryptoJS {
+    open func encrypt(_ message: Swift.String, password: Swift.String, options: Any? = nil) -> Swift.String
+    open func decrypt(_ message: Swift.String, password: Swift.String, options: Any? = nil) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class TripleDES : SabPaisa_IOS_Sdk.CryptoJS {
+    open func encrypt(_ message: Swift.String, password: Swift.String) -> Swift.String
+    open func decrypt(_ message: Swift.String, password: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class DES : SabPaisa_IOS_Sdk.CryptoJS {
+    open func encrypt(_ message: Swift.String, password: Swift.String) -> Swift.String
+    open func decrypt(_ message: Swift.String, password: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class MD5 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class SHA1 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class SHA224 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class SHA256 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class SHA384 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class SHA512 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class SHA3 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String, outputLength: Swift.Int? = nil) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class RIPEMD160 : SabPaisa_IOS_Sdk.CryptoJS {
+    open func hash(_ string: Swift.String, outputLength: Swift.Int? = nil) -> Swift.String
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class mode : SabPaisa_IOS_Sdk.CryptoJS {
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class CFB : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class CTR : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class OFB : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class ECB : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @objc deinit
+  }
+  @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class pad : SabPaisa_IOS_Sdk.CryptoJS {
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class AnsiX923 : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class Iso97971 : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class Iso10126 : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class ZeroPadding : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class NoPadding : SabPaisa_IOS_Sdk.CryptoJS {
+      @objc deinit
+    }
+    @objc deinit
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class DashedUIView : UIKit.UIView {
+  public struct Configuration {
+    public var color: UIKit.UIColor
+    public var dashLength: CoreFoundation.CGFloat
+    public var dashGap: CoreFoundation.CGFloat
+    public init(color: UIKit.UIColor, dashLength: CoreFoundation.CGFloat, dashGap: CoreFoundation.CGFloat)
+  }
+  @_Concurrency.MainActor(unsafe) public class var lineHeight: CoreFoundation.CGFloat {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) final public var config: SabPaisa_IOS_Sdk.DashedUIView.Configuration {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class InitialLoadViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) public var callback: ((SabPaisa_IOS_Sdk.TransactionResponse) -> Swift.Void)?
+  @_Concurrency.MainActor(unsafe) public var sdkInitModel: SabPaisa_IOS_Sdk.SdkInitModel?
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewDidLoad()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func prepare(for segue: UIKit.UIStoryboardSegue, sender: Any?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public struct PaymentRequestForUrl : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class MasterViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension SabPaisa_IOS_Sdk.Result.Status : Swift.Equatable {}
+extension SabPaisa_IOS_Sdk.Result.Status : Swift.Hashable {}
+extension SabPaisa_IOS_Sdk.EqualityRule.Mode : Swift.Equatable {}
+extension SabPaisa_IOS_Sdk.EqualityRule.Mode : Swift.Hashable {}
+extension SabPaisa_IOS_Sdk.PaymentCardType : Swift.Equatable {}
+extension SabPaisa_IOS_Sdk.PaymentCardType : Swift.Hashable {}
+extension SabPaisa_IOS_Sdk.PaymentCardType : Swift.RawRepresentable {}
+extension SabPaisa_IOS_Sdk.FormValidator.AutoValidationPolicy : Swift.Equatable {}
+extension SabPaisa_IOS_Sdk.FormValidator.AutoValidationPolicy : Swift.Hashable {}

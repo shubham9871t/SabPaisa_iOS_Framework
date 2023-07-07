@@ -1,0 +1,11 @@
+framework module SabPaisa_IOS_Sdk {
+  umbrella header "SabPaisa_IOS_Sdk.h"
+
+  export *
+  module * { export * }
+}
+
+module SabPaisa_IOS_Sdk.Swift {
+  header "SabPaisa_IOS_Sdk-Swift.h"
+  requires objc
+}
